@@ -88,11 +88,9 @@ def parse_status(homework):
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if 'homework_name' not in homework:
-        logger.error('В homework нет ключа "homework_name"')
-        raise KeyError('В homework нет ключа "homework_name"')
-    if "status" not in homework:
-        logger.error('В homework нет ключа "status"')
-        raise KeyError('В homework нет ключа "status"')
+        raise KeyError('В homework нет ключа homework_name')
+    if 'status' not in homework:
+        raise KeyError('В homework нет ключа status')
     if homework_status not in HOMEWORK_VERDICTS:
         raise ValueError('Недокументированный статус домашней работы')
     verdict = HOMEWORK_VERDICTS[homework_status]
@@ -120,7 +118,6 @@ def main():
             else:
                 logger.debug('Статус домашней работы не изменился')
             timestamp = response.get('current_date')
-            time.sleep(RETRY_PERIOD)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             logger.error(message)
